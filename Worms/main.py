@@ -28,7 +28,7 @@ windowOpen = 1
 while windowOpen:
 
     #time between frames
-    clock.tick(45)
+    clock.tick(60)
 
     #events
     for event in pygame.event.get():
