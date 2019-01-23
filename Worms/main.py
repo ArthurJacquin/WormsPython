@@ -42,18 +42,19 @@ while windowOpen:
         player.x -= player.vel
         player.left = True
         player.right = False
+        player.standing = False
     elif keys[pygame.K_RIGHT] and player.x < screenWidth - player.width - player.vel :
         player.x += player.vel
         player.right = True
         player.left = False
+        player.standing = False
     else:
-        player.right = False
-        player.left = False
+        player.standing = True
         player.walkCount = 0
 
     #Jump
     if not player.isJumping:
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_RETURN]:
             player.isJumping = True
             player.right = False
             player.left = False

@@ -13,6 +13,7 @@ class Player(object):
         self.left = False
         self.right = False
         self.walkCount = 0
+        self.standing = True
 
         # Player Sprites
         self.walkRight = [pygame.image.load('Images\Rwalk1.png'),
@@ -47,15 +48,19 @@ class Player(object):
                          pygame.image.load('Images\Lwalk15.png')]
         self.char = pygame.image.load('Images\Idle.png')
 
-    def draw(self, win):
+    def draw(self, window):
         if self.walkCount + 1 >= 45:
             self.walkCount = 0
 
-        if self.left:
-            win.blit(self.walkLeft[self.walkCount//3], (self.x,self.y))
-            self.walkCount += 1
-        elif self.right:
-            win.blit(self.walkRight[self.walkCount//3], (self.x,self.y))
-            self.walkCount +=1
+        if not self.standing:
+            if self.left:
+                window.blit(self.walkLeft[self.walkCount//3], (self.x,self.y))
+                self.walkCount += 1
+            elif self.right:
+                window.blit(self.walkRight[self.walkCount//3], (self.x,self.y))
+                self.walkCount +=1
         else:
-            win.blit(self.char, (self.x,self.y))
+            if self.right:
+                window.blit(self.walkRight[0], (self.x, self.y))
+            else:
+                window.blit(self.walkLeft[0], (self.x, self.y))

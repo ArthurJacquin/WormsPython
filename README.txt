@@ -1,2 +1,2 @@
 Déplacements: Flèches gauche\droite
-Saut : Espace
+Saut : Entrée
