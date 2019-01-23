@@ -1,15 +1,20 @@
 import pygame
-from Player import *
+from Worms.Player import *
+from Worms.Rocket import *
+from Worms.Physics import *
+from Worms.Vector2 import Vector2
+
 pygame.init()
 
 #Open window
 screenWidth = 850
 screenHeight = 480
 window = pygame.display.set_mode((screenWidth, screenHeight))
-pygame.display.set_caption("Tuto")
+pygame.display.set_caption("Worms")
 
 #Player
-player = Player(300, 410, 60, 60)
+player = Player(100, screenHeight - 65, 60, 60)
+rocketShot = False
 
 #Background sprite
 bg = pygame.image.load('Images\Background.jpg')
@@ -20,7 +25,11 @@ clock = pygame.time.Clock()
 #Update window
 def redrawGameWindow():
     window.blit(bg, (0,0))
+    pygame.draw.rect(window,(88, 41, 0), (0, screenHeight - 25, screenWidth, 25))
     player.draw(window)
+
+    if rocketShot:
+        rocket.draw(window)
     pygame.display.update()
 
 #main loop
@@ -48,6 +57,11 @@ while windowOpen:
         player.right = True
         player.left = False
         player.standing = False
+    elif keys[pygame.K_SPACE] and not player.hasShot:
+        # Rocket shot
+        rocket = Rocket(round(player.x + player.width // 2), round(player.y + player.height // 2), 6, (0, 0, 0), facing)
+        player.hasShot = True
+        rocketShot = True
     else:
         player.standing = True
         player.walkCount = 0
@@ -70,6 +84,24 @@ while windowOpen:
         else:
             player.isJumping = False
             player.jumpCount = 10
+
+    #Weapons
+    if player.left:
+        facing = -1
+    else:
+        facing = 1
+
+    #Rocket
+    if rocketShot:
+        if rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0:
+            #Formule de trajectoire à mettre ici
+            speedVector = Physics.CalculateSpeedVector(rocket.vel, 45)
+            newPos = Physics.CalculateNexPosition(Vector2(rocket.x, rocket.y), speedVector, 0.1, Vector2(0,0))
+            rocket.x = newPos.x
+            rocket.y = newPos.y
+
+        else:
+            rocketShot = False
 
     redrawGameWindow()
 
