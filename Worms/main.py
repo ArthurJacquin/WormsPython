@@ -15,6 +15,7 @@ pygame.display.set_caption("Worms")
 #Player
 player = Player(100, 350, 60, 60)
 
+
 rocketShot = False
 grenadeShot = False
 
@@ -119,21 +120,38 @@ while windowOpen:
         facing = 1
 
     #Rocket
-    if rocketShot:
+    if rocketShot and rocket.y + 3 < screenHeight - 25:
         if rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0:
             #Formule de trajectoire à mettre ici
             time +=0.02
-            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel, pygame.math.Vector2(0,0),50 , facing, time)
+            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel, pygame.math.Vector2(5,0),50 , facing, time)
 
             rocket.x = newPos.x
             rocket.y = newPos.y
 
         else:
             rocketShot = False
+    elif rocketShot:
+        rocket.radius += 2
+        if rocket.radius > 30:
+            rocket.radius = 0
+            rocketShot = False
 
     #Grenade
     if grenadeShot:
-    	grenade.grenadeShot()
+        if grenade.x < screenWidth and grenade.x > 0 and grenade.y < screenHeight and grenade.y > 0:
+            time += 0.02
+            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(grenade.x, grenade.y), grenade.vel,
+                                                  pygame.math.Vector2(0, 0), 45, facing, time)
+
+            grenade.x = newPos.x
+            grenade.y = newPos.y
+
+    #elif collision and nbRebond < 5:
+        #grenade.ResetSpeedVector()
+        #grenade.grenadeShot()
+    #else:
+        #explosion()
 
     redrawGameWindow()
 
