@@ -1,5 +1,4 @@
 import pygame
-from Worms.Vector2 import *
 from Worms.Physics import *
 
 class Grenade():
@@ -22,7 +21,7 @@ class Grenade():
 
 	def grenadeShot(self):
 		speedVector = Physics.CalculateSpeedVector(self.vel, 45,self.facing)
-		newPos = Physics.CalculateNexPosition(Vector2(self.x, self.y), speedVector, 0.1, Vector2(0, 0))
+		newPos = Physics.CalculateNexPosition(pygame.math.Vector2(self.x, self.y), speedVector, 0.1, pygame.math.Vector2(0, 0))
 		self.x = newPos.x
 		self.y = newPos.y
 

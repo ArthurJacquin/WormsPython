@@ -3,13 +3,12 @@ from Worms.Player import *
 from Worms.Rocket import *
 from Worms.Physics import *
 from Worms.Grenade import *
-from Worms.Vector2 import Vector2
 
 pygame.init()
 
 #Open window
 screenWidth = 850
-screenHeight = 480
+screenHeight = 900
 window = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Worms")
 
@@ -117,10 +116,12 @@ while windowOpen:
     if rocketShot:
         if rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0:
             #Formule de trajectoire à mettre ici
-            speedVector = Physics.CalculateSpeedVector(rocket.vel, 45, rocket.facing)
-            newPos = Physics.CalculateNexPosition(Vector2(rocket.x, rocket.y), speedVector, 0.5, Vector2(0,0))
+            angle = 45
+            speedVector = Physics.CalculateSpeedVector(rocket.vel, angle, rocket.facing)
+            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), speedVector, pygame.math.Vector2(0,0))
             rocket.x = newPos.x
             rocket.y = newPos.y
+            angle -= 1
 
         else:
             rocketShot = False

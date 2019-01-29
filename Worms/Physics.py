@@ -1,16 +1,19 @@
 import math
-from sympy import pi
-from Worms.Vector2 import Vector2
+import pygame
+from sympy import pi, sin
 
 class Physics:
 
     @staticmethod
     def CalculateSpeedVector(speed, angle, direction):
-        vec = Vector2(math.cos(angle * pi / 180) * direction, math.sin(angle * pi /180))
+        vec = pygame.math.Vector2(math.cos(angle * pi / 180) * direction, math.sin(angle * pi /180))
         vec *= speed
         return vec
 
     @staticmethod
-    def CalculateNexPosition(startPos, speed, time, wind):
-        forces = Vector2(0, -9.81) + wind
-        return startPos + speed * time + forces * .5 * (time ** 2)
+    def CalculateNexPosition(startPos, speed, wind):
+        forces = pygame.math.Vector2(0, -9.81) + wind
+        x = startPos.x + speed.x
+        y = -(-0.5 * (forces.y) ** 2 + (startPos * speed)) + startPos.y
+        newPos = pygame.math.Vector2(x, y)
+        return newPos
