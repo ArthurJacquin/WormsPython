@@ -8,14 +8,16 @@ pygame.init()
 
 #Open window
 screenWidth = 850
-screenHeight = 900
+screenHeight = 480
 window = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Worms")
 
 #Player
-player = Player(100, screenHeight - 65, 60, 60)
+player = Player(100, 350, 60, 60)
 rocketShot = False
 grenadeShot = False
+
+time = 0
 
 #Weapon selected
 rocketSelected = False
@@ -29,8 +31,8 @@ clock = pygame.time.Clock()
 
 #Update window
 def redrawGameWindow():
-    window.blit(bg, (0,0))
-    pygame.draw.rect(window,(88, 41, 0), (0, screenHeight - 25, screenWidth, 25))
+    #window.blit(bg, (0,0))
+    pygame.draw.rect(window,(88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
     player.draw(window)
 
     if rocketShot:
@@ -87,6 +89,9 @@ while windowOpen:
         player.standing = True
         player.walkCount = 0
 
+    if player.y + 45 < screenHeight - 25 and not player.isJumping:
+        player.y += 9
+
     #Jump
     if not player.isJumping:
         if keys[pygame.K_RETURN]:
@@ -116,12 +121,11 @@ while windowOpen:
     if rocketShot:
         if rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0:
             #Formule de trajectoire à mettre ici
-            angle = 45
-            speedVector = Physics.CalculateSpeedVector(rocket.vel, angle, rocket.facing)
-            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), speedVector, pygame.math.Vector2(0,0))
+            time +=0.03
+            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel, pygame.math.Vector2(0,0), 45, facing, time)
+
             rocket.x = newPos.x
             rocket.y = newPos.y
-            angle -= 1
 
         else:
             rocketShot = False
