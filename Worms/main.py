@@ -36,7 +36,6 @@ def redrawGameWindow():
 #main loop
 windowOpen = 1
 while windowOpen:
-
     #time between frames
     clock.tick(60)
 
@@ -59,15 +58,15 @@ while windowOpen:
         player.left = False
         player.standing = False
     elif keys[pygame.K_SPACE] and not player.hasShot:
-    	if keys[pygame.K_2]:
-		    # Rocket shot
-		    rocket = Rocket(round(player.x + player.width // 2), round(player.y + player.height // 2), 6, (0, 0, 0), facing)
-		    player.hasShot = True
-		    rocketShot = True
-		#if keys[pygame.K_1]:
-			#grenade shot
-			#player.hasShot = True
-			#grenadeShot = True
+        if keys[pygame.K_2]:
+            # Rocket shot
+            rocket = Rocket(round(player.x + player.width // 2), round(player.y + player.height // 2), 6, (0, 0, 0), facing)
+            player.hasShot = True
+            rocketShot = True
+        #if keys[pygame.K_1]:
+            #grenade shot
+            #player.hasShot = True
+            #grenadeShot = True
     else:
         player.standing = True
         player.walkCount = 0
@@ -116,7 +115,5 @@ while windowOpen:
     redrawGameWindow()
 
 #def grenade():
-
-
 
 pygame.quit()
