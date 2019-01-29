@@ -2,11 +2,11 @@ import pygame
 from Worms.Vector2 import Vector2
 
 class Rocket(object):
-    def __init__(self, x, y, radius, color, facing):
+    def __init__(self, x, y, radius, facing):
         self.x = x
         self.y = y
         self.radius = radius
-        self.color = color
+        self.color = (255, 0, 0)
         self.facing = facing
         self.vel = 5
 

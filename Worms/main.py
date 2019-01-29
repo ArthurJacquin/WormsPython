@@ -2,6 +2,7 @@ import pygame
 from Worms.Player import *
 from Worms.Rocket import *
 from Worms.Physics import *
+from Worms.Grenade import *
 from Worms.Vector2 import Vector2
 
 pygame.init()
@@ -35,6 +36,9 @@ def redrawGameWindow():
 
     if rocketShot:
         rocket.draw(window)
+
+    if grenadeShot:
+        grenade.draw(window)
     pygame.display.update()
 
 #main loop
@@ -73,13 +77,13 @@ while windowOpen:
     elif keys[pygame.K_SPACE] and not player.hasShot:
         if rocketSelected:
             # Rocket shot
-            rocket = Rocket(round(player.x + player.width // 2), round(player.y + player.height // 2), 6, (0, 0, 0), facing)
+            rocket = Rocket(round(player.x + player.width // 2), round(player.y + player.height // 2), 6, facing)
             player.hasShot = True
             rocketShot = True
-        #if grenadeSelected:
-            #grenade shot
-            #player.hasShot = True
-            #grenadeShot = True
+        if grenadeSelected:
+            grenade = Grenade(round(player.x + player.width // 2), round(player.y + player.height // 2), 6, facing)
+            player.hasShot = True
+            grenadeShot = True
     else:
         player.standing = True
         player.walkCount = 0
@@ -122,8 +126,8 @@ while windowOpen:
             rocketShot = False
 
     #Grenade
-    #if grenadeShot:
-    	#grenade()
+    if grenadeShot:
+    	grenade.grenadeShot()
 
     redrawGameWindow()
 

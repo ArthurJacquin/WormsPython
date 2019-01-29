@@ -4,12 +4,13 @@ from Worms.Physics import *
 
 class Grenade():
 	"""This class represents the grenade weapon"""
-	def __init__(self, x, y, radius, color):
+	def __init__(self, x, y, radius, facing):
 		self.x = x
 		self.y = y
 		self.radius = radius
-		self.color = color
+		self.color = (0, 0, 255)
 		self.vel = 1
+		self.facing = facing
 
 	def draw(self, window):
 		"""Draw bullet"""
@@ -20,9 +21,7 @@ class Grenade():
 		pygame.draw.lines(window, self.color, self.start, self.end, 3)
 
 	def grenadeShot(self):
-		vzero = (0,0)
-		shot = -1/2*(9.1/vzero)
-		speedVector = Physics.CalculateSpeedVector(self.vel, 45)
+		speedVector = Physics.CalculateSpeedVector(self.vel, 45,self.facing)
 		newPos = Physics.CalculateNexPosition(Vector2(self.x, self.y), speedVector, 0.1, Vector2(0, 0))
 		self.x = newPos.x
 		self.y = newPos.y
