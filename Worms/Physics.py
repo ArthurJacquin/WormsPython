@@ -5,8 +5,8 @@ from Worms.Vector2 import Vector2
 class Physics:
 
     @staticmethod
-    def CalculateSpeedVector(speed, angle):
-        vec = Vector2(math.cos(angle * pi / 180), math.sin(angle * pi /180))
+    def CalculateSpeedVector(speed, angle, direction):
+        vec = Vector2(math.cos(angle * pi / 180) * direction, math.sin(angle * pi /180))
         vec *= speed
         return vec
 

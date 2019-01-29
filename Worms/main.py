@@ -17,6 +17,10 @@ player = Player(100, screenHeight - 65, 60, 60)
 rocketShot = False
 grenadeShot = False
 
+#Weapon selected
+rocketSelected = False
+grenadeSelected = False
+
 #Background sprite
 bg = pygame.image.load('Images\Background.jpg')
 
@@ -44,9 +48,18 @@ while windowOpen:
         if event.type == pygame.QUIT:
             windowOpen = 0
 
-    #movements
+
     keys = pygame.key.get_pressed()
 
+    #Weapon selected
+    if keys[pygame.K_1]:
+        rocketSelected = True
+        grenadeSelected = False
+    if keys[pygame.K_2]:
+        rocketSelected = False
+        grenadeSelected = True
+
+    # movements
     if keys[pygame.K_LEFT] and player.x > player.vel:
         player.x -= player.vel
         player.left = True
@@ -58,12 +71,12 @@ while windowOpen:
         player.left = False
         player.standing = False
     elif keys[pygame.K_SPACE] and not player.hasShot:
-        if keys[pygame.K_2]:
+        if rocketSelected:
             # Rocket shot
             rocket = Rocket(round(player.x + player.width // 2), round(player.y + player.height // 2), 6, (0, 0, 0), facing)
             player.hasShot = True
             rocketShot = True
-        #if keys[pygame.K_1]:
+        #if grenadeSelected:
             #grenade shot
             #player.hasShot = True
             #grenadeShot = True
@@ -100,8 +113,8 @@ while windowOpen:
     if rocketShot:
         if rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0:
             #Formule de trajectoire à mettre ici
-            speedVector = Physics.CalculateSpeedVector(rocket.vel, 45)
-            newPos = Physics.CalculateNexPosition(Vector2(rocket.x, rocket.y), speedVector, 0.1, Vector2(0,0))
+            speedVector = Physics.CalculateSpeedVector(rocket.vel, 45, rocket.facing)
+            newPos = Physics.CalculateNexPosition(Vector2(rocket.x, rocket.y), speedVector, 0.5, Vector2(0,0))
             rocket.x = newPos.x
             rocket.y = newPos.y
 
