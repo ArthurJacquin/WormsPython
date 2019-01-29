@@ -7,7 +7,7 @@ class Rocket(object):
         self.radius = radius
         self.color = (255, 0, 0)
         self.facing = facing
-        self.vel = 5
+        self.vel = 8
 
     def draw(self, window):
         pygame.draw.circle(window, self.color, (round(self.x), round(self.y)), self.radius)

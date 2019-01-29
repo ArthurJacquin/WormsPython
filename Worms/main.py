@@ -14,6 +14,7 @@ pygame.display.set_caption("Worms")
 
 #Player
 player = Player(100, 350, 60, 60)
+
 rocketShot = False
 grenadeShot = False
 
@@ -31,7 +32,7 @@ clock = pygame.time.Clock()
 
 #Update window
 def redrawGameWindow():
-    #window.blit(bg, (0,0))
+    window.blit(bg, (0,0))
     pygame.draw.rect(window,(88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
     player.draw(window)
 
@@ -121,8 +122,8 @@ while windowOpen:
     if rocketShot:
         if rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0:
             #Formule de trajectoire à mettre ici
-            time +=0.03
-            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel, pygame.math.Vector2(0,0), 45, facing, time)
+            time +=0.02
+            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel, pygame.math.Vector2(0,0),50 , facing, time)
 
             rocket.x = newPos.x
             rocket.y = newPos.y
