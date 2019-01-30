@@ -8,7 +8,7 @@ class Grenade():
 		self.y = y
 		self.radius = radius
 		self.color = (0, 0, 255)
-		self.vel = 8
+		self.vel = 10
 		self.facing = facing
 
 	def draw(self, window):

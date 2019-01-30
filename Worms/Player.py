@@ -2,7 +2,7 @@ import pygame
 
 
 class Player(object):
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, playing):
         self.x = x
         self.y = y
         self.width = width
@@ -15,6 +15,8 @@ class Player(object):
         self.right = False
         self.walkCount = 0
         self.hasShot = False
+        self.playing = playing
+        self.facing = 1
 
         # Player Sprites
         self.walkRight = [pygame.image.load('Images\Rwalk1.png'),
@@ -47,7 +49,7 @@ class Player(object):
                          pygame.image.load('Images\Lwalk13.png'),
                          pygame.image.load('Images\Lwalk14.png'),
                          pygame.image.load('Images\Lwalk15.png')]
-        self.char = pygame.image.load('Images\Idle.png')
+        self.char = pygame.image.load('Images\Rwalk1.png')
 
     def draw(self, win):
         if self.walkCount + 1 >= 45:
