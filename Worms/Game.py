@@ -2,11 +2,14 @@ import pygame
 from Worms.Player import *
 from Worms.Rocket import *
 from Worms.Grenade import *
+#from Worms.main import *
+from Worms.GroundGenerator import *
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, sol):
 
+        self.sol = sol
         # Player
         self.player = Player(100, 350, 60, 60)
         self.player2 = Player(400, 350, 60, 60)
@@ -45,7 +48,11 @@ class Game:
     # Update window
     def redrawGameWindow(self, window, screenHeight, screenWidth):
         window.blit(self.bg, (0, 0))
+
         window.blit(self.timerText, (10, 10))
+
+
+        groundGenerator(screenHeight, screenWidth, window, self.sol, 0)
 
         pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
 

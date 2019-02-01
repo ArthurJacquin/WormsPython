@@ -1,4 +1,6 @@
 from Worms.Game import *
+from Worms.GroundGenerator import *
+
 
 pygame.init()
 
@@ -7,11 +9,13 @@ screenWidth = 850
 screenHeight = 480
 window = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Worms")
-
-game = Game()
+sol = list()
+game = Game(sol)
 currentPlayer = game.players[game.currentPlayerIndex]
 rocket = game.rocket
 grenade = game.grenade
+
+groundGenerator(screenHeight, screenWidth, window, sol, 1)
 
 # main loop
 windowOpen = 1
