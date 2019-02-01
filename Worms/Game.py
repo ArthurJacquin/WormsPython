@@ -8,10 +8,11 @@ class Game:
     def __init__(self):
 
         # Player
-        self.player = Player(100, 350, 60, 60, True)
-        self.player2 = Player(400, 350, 60, 60, False)
+        self.player = Player(100, 350, 60, 60)
+        self.player2 = Player(400, 350, 60, 60)
 
         self.players = [self.player, self.player2]
+        self.currentPlayerIndex = 0
 
         self.rocketShot = False
         self.grenadeShot = False

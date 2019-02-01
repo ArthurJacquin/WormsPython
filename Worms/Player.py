@@ -2,7 +2,7 @@ import pygame
 
 
 class Player(object):
-    def __init__(self, x, y, width, height, playing):
+    def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
         self.width = width
@@ -15,7 +15,6 @@ class Player(object):
         self.right = False
         self.walkCount = 0
         self.hasShot = False
-        self.playing = playing
         self.facing = 1
 
         # Player Sprites

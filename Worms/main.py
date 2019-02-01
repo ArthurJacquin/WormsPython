@@ -9,7 +9,7 @@ window = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Worms")
 
 game = Game()
-currentPlayer = game.players[1]
+currentPlayer = game.players[game.currentPlayerIndex]
 rocket = game.rocket
 grenade = game.grenade
 
@@ -30,6 +30,7 @@ while windowOpen:
     if keys[pygame.K_1]:
         game.rocketSelected = True
         game.grenadeSelected = False
+
     if keys[pygame.K_2]:
         game.rocketSelected = False
         game.grenadeSelected = True
@@ -40,18 +41,23 @@ while windowOpen:
         currentPlayer.left = True
         currentPlayer.right = False
         currentPlayer.standing = False
+
     elif keys[pygame.K_RIGHT] and currentPlayer.x < screenWidth - currentPlayer.width - currentPlayer.vel:
         currentPlayer.x += currentPlayer.vel
         currentPlayer.right = True
         currentPlayer.left = False
         currentPlayer.standing = False
+
     elif keys[pygame.K_SPACE] and not currentPlayer.hasShot:
+
         if game.rocketSelected:
             # Rocket shot
             rocket.setupForShoot(currentPlayer, currentPlayer.facing)
             currentPlayer.hasShot = True
             game.rocketShot = True
+
         if game.grenadeSelected:
+            # Grenade shot
             grenade = Grenade(round(currentPlayer.x + currentPlayer.width // 2),
                               round(currentPlayer.y + currentPlayer.height // 2), 6, currentPlayer.facing)
             currentPlayer.hasShot = True
@@ -60,8 +66,9 @@ while windowOpen:
         currentPlayer.standing = True
         currentPlayer.walkCount = 0
 
-    if currentPlayer.y + 45 < screenHeight - 25 and not currentPlayer.isJumping:
-        currentPlayer.y += 9
+    for player in game.players:
+        if player.y + 45 < screenHeight - 25 and not player.isJumping:
+            player.y += 9
 
     # Jump
     if not currentPlayer.isJumping:
@@ -100,12 +107,19 @@ while windowOpen:
 
         else:
             game.rocketShot = False
+    #explosion
     elif game.rocketShot:
         rocket.radius += 2
         if rocket.radius > 30:
             rocket.radius = 0
             game.rocketShot = False
-            time = 0
+            game.rocketSelected = False
+            game.time = 0
+
+            #player switch
+            game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+            game.currentPlayerIndex += 1
+            currentPlayer = game.players[game.currentPlayerIndex % len(game.players)]
 
     # Grenade
     if game.grenadeShot:
