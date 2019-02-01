@@ -1,5 +1,9 @@
-Déplacements: Flèches gauche\droite
+Déplacements: 
+Gauche : Flèches gauche
+Droite : Flèche droite
 Saut : Entrée
-Pavé Numérique =
+
+Armes :
 1 : Grenade 
 2 : Rocket
+Espace : Tirer

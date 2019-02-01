@@ -42,18 +42,36 @@ class Game:
         self.timer = pygame.font.Font('Font\Freesansbold.ttf', 48)
         self.timerText = self.timer.render(str(self.maxTimePerTurn), True, (255, 0, 0))
 
+        # Weapon sprites
+        self.bazookaSprite = pygame.image.load('Images\Bazooka.png')
+        self.grenadeSprite = pygame.image.load('Images\Grenade.png')
+
     # Update window
     def redrawGameWindow(self, window, screenHeight, screenWidth):
         window.blit(self.bg, (0, 0))
+
+        # Timer
         window.blit(self.timerText, (10, 10))
 
+        # Ground
         pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
 
+        # Selected weapon
+        if self.rocketSelected:
+            window.blit(self.bazookaSprite, (screenWidth - 50, screenHeight - 50))
+        if self.grenadeSelected:
+            window.blit(self.grenadeSprite, (screenWidth - 50, screenHeight - 50))
+
+        # Players
         for player in self.players:
             player.draw(window)
 
-        self.rocket.draw(window)
-        self.grenade.draw(window)
+        # Weapons
+        if self.rocketShot:
+            self.rocket.draw(window)
+        if self.grenadeShot:
+            self.grenade.draw(window)
+
         pygame.display.update()
 
     # Update time text
