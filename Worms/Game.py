@@ -33,9 +33,20 @@ class Game:
         # FPS
         self.clock = pygame.time.Clock()
 
+        # Turn time
+        self.maxTimePerTurn = 60000
+        self.startTurnTime = pygame.time.get_ticks()
+        self.currentTurnTime = round(self.startTurnTime / 1000)
+
+        # Turn time text
+        self.timer = pygame.font.SysFont(None, 48)
+        self.timerText = self.timer.render(str(self.maxTimePerTurn), True, (255, 0, 0))
+
     # Update window
     def redrawGameWindow(self, window, screenHeight, screenWidth):
         window.blit(self.bg, (0, 0))
+        window.blit(self.timerText, (10, 10))
+
         pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
 
         for player in self.players:
@@ -44,3 +55,17 @@ class Game:
         self.rocket.draw(window)
         self.grenade.draw(window)
         pygame.display.update()
+
+    # Update time text
+    def updateTime(self):
+        self.currentTurnTime = round((self.maxTimePerTurn - (pygame.time.get_ticks() - self.startTurnTime)) / 1000)
+        self.timerText = self.timer.render(str(self.currentTurnTime), True, (255, 0, 0))
+
+    # Switch to next player
+    def switchPlayer(self):
+        self.currentPlayerIndex += 1
+        self.startTurnTime = pygame.time.get_ticks()
+        self.currentTurnTime = round(self.startTurnTime / 1000)
+
+        return self.players[self.currentPlayerIndex % len(self.players)]
+

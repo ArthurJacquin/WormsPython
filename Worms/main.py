@@ -18,6 +18,10 @@ windowOpen = 1
 while windowOpen:
     # time between frames
     game.clock.tick(60)
+    game.updateTime()
+
+    if pygame.time.get_ticks() - game.startTurnTime > game.maxTimePerTurn:
+        currentPlayer = game.switchPlayer()
 
     # events
     for event in pygame.event.get():
@@ -118,8 +122,7 @@ while windowOpen:
 
             #player switch
             game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
-            game.currentPlayerIndex += 1
-            currentPlayer = game.players[game.currentPlayerIndex % len(game.players)]
+            currentPlayer = game.switchPlayer()
 
     # Grenade
     if game.grenadeShot:
