@@ -63,6 +63,10 @@ class Game:
 
     # Switch to next player
     def switchPlayer(self):
+        self.players[self.currentPlayerIndex % len(self.players)].right = False
+        self.players[self.currentPlayerIndex % len(self.players)].left = False
+
+
         self.currentPlayerIndex += 1
         self.startTurnTime = pygame.time.get_ticks()
         self.currentTurnTime = round(self.startTurnTime / 1000)
