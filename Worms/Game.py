@@ -39,7 +39,7 @@ class Game:
         self.currentTurnTime = round(self.startTurnTime / 1000)
 
         # Turn time text
-        self.timer = pygame.font.SysFont(None, 48)
+        self.timer = pygame.font.Font('Font\Freesansbold.ttf', 48)
         self.timerText = self.timer.render(str(self.maxTimePerTurn), True, (255, 0, 0))
 
     # Update window
