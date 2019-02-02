@@ -1,7 +1,10 @@
 Déplacements: 
-Gauche : Flèches gauche
+Gauche : Flèche gauche
 Droite : Flèche droite
 Saut : Entrée
+
+Déplacements du viseur: 
+Flèche haut/ flèche bas
 
 Armes :
 1 : Grenade 

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc39de1d-45fc-4db8-bbf0-56f82b0dcc59" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="cc39de1d-45fc-4db8-bbf0-56f82b0dcc59" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/Worms/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,8 +74,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Worms/Physics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="408">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -122,11 +120,11 @@
         <option value="$PROJECT_DIR$/Worms/Vector2.py" />
         <option value="$PROJECT_DIR$/Worms/Grenade.py" />
         <option value="$PROJECT_DIR$/Worms/Rocket.py" />
-        <option value="$PROJECT_DIR$/Worms/Physics.py" />
         <option value="$PROJECT_DIR$/Worms/Game.py" />
         <option value="$PROJECT_DIR$/Worms/Player.py" />
         <option value="$PROJECT_DIR$/Worms/Crosshair.py" />
         <option value="$PROJECT_DIR$/Worms/main.py" />
+        <option value="$PROJECT_DIR$/Worms/Physics.py" />
       </list>
     </option>
   </component>
@@ -238,8 +236,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.12892741" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.40086675" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.12892741" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.40086675" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32922733" />
@@ -270,22 +268,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout-to-restore>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Worms/Physics.py</url>
-          <line>15</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Worms/Physics.py</url>
-          <line>17</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Worms/Scripts/WeaponsPhysics.py" />
@@ -365,8 +347,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Worms/Physics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="408">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
