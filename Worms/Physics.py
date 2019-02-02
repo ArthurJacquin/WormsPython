@@ -9,15 +9,13 @@ class Physics:
         vec *= speed
         return vec
 
+    # Calculate coordinates of the projectile for the next frame
     @staticmethod
     def CalculateNexPosition(startPos, speed, wind, angle, direction, time):
         forces = pygame.math.Vector2(0, -9.81) + wind
         speedVec = pygame.math.Vector2(math.cos(math.radians(angle)) * speed, math.sin(math.radians(angle)) * speed)
 
-        if direction == 1:
-            newX = startPos.x + speedVec.x * time
-        else:
-            newX = startPos.x - speedVec.x * time
+        newX = startPos.x + speedVec.x * time
 
         newY = startPos.y - ((speedVec.y * time) + (forces.y * 0.5 * time ** 2))
 

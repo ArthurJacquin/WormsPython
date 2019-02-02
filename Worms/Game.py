@@ -2,6 +2,7 @@ import pygame
 from Worms.Player import *
 from Worms.Rocket import *
 from Worms.Grenade import *
+from Worms.Crosshair import *
 
 
 class Game:
@@ -65,6 +66,9 @@ class Game:
         # Players
         for player in self.players:
             player.draw(window)
+
+        # Crosshair
+        self.players[self.currentPlayerIndex % len(self.players)].crosshair.draw(window)
 
         # Weapons
         if self.rocketShot:

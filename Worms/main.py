@@ -20,6 +20,9 @@ while windowOpen:
     game.clock.tick(60)
     game.updateTime()
 
+    currentPlayer.UpdateCrosshairPosition()
+
+    # Switch player if time = 0
     if pygame.time.get_ticks() - game.startTurnTime > game.maxTimePerTurn:
         currentPlayer = game.switchPlayer()
 
@@ -70,6 +73,13 @@ while windowOpen:
         currentPlayer.standing = True
         currentPlayer.walkCount = 0
 
+    # Move crosshair
+    if keys[pygame.K_UP] and currentPlayer.crosshair.angle < 180:
+        currentPlayer.crosshair.move(1)
+
+    if keys[pygame.K_DOWN] and currentPlayer.crosshair.angle > 0:
+        currentPlayer.crosshair.move(-1)
+
     for player in game.players:
         if player.y + 45 < screenHeight - 25 and not player.isJumping:
             player.y += 9
@@ -100,18 +110,15 @@ while windowOpen:
         currentPlayer.facing = 1
 
     # Rocket
-    if game.rocketShot and rocket.y + 3 < screenHeight - 25:
-        if rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0:
+    if game.rocketShot and rocket.y + 3 < screenHeight - 25 and rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0: # Si pas de collision
             game.time += 0.05
             newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
-                                                  pygame.math.Vector2(5, 0), 50, currentPlayer.facing, game.time)
+                                                  pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, currentPlayer.facing, game.time)
 
             rocket.x = newPos.x
             rocket.y = newPos.y
 
-        else:
-            game.rocketShot = False
-    #explosion
+    #Collision -> explosion
     elif game.rocketShot:
         rocket.radius += 2
         if rocket.radius > 30:
@@ -129,7 +136,7 @@ while windowOpen:
         if grenade.x < screenWidth and grenade.x > 0 and grenade.y < screenHeight and grenade.y > 0:
             game.time += 0.05
             newPos = Physics.CalculateNexPosition(pygame.math.Vector2(grenade.x, grenade.y), grenade.vel,
-                                                  pygame.math.Vector2(0, 0), 45, currentPlayer.facing, game.time)
+                                                  pygame.math.Vector2(0, 0), currentPlayer.crosshair.angle, currentPlayer.facing, game.time)
 
             grenade.x = newPos.x
             grenade.y = newPos.y
