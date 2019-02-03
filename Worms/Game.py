@@ -28,7 +28,7 @@ class Game:
         self.rocketSelected = False
         self.grenadeSelected = False
 
-        # Background sprite
+        # Background sprites
         self.bg = pygame.image.load('Images\Background.jpg')
 
         # FPS
@@ -102,4 +102,6 @@ class Game:
     def updatePower(self):
         self.players[self.currentPlayerIndex % len(self.players)].shootPowerBar.width += 1
         self.rocket.vel += 0.2
+
+
 

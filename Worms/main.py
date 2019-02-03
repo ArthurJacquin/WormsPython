@@ -1,4 +1,5 @@
 from Worms.Game import *
+from Worms.Menu import *
 
 pygame.init()
 
@@ -8,6 +9,7 @@ screenHeight = 480
 window = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Worms")
 
+menu = Menu()
 game = Game()
 currentPlayer = game.players[game.currentPlayerIndex]
 rocket = game.rocket
@@ -16,8 +18,13 @@ grenade = game.grenade
 # main loop
 windowOpen = 1
 while windowOpen:
+
     # time between frames
     game.clock.tick(60)
+
+    if menu.isActive:
+        menu.displayMenu(window, screenWidth, screenHeight)
+
     game.updateTime()
 
     currentPlayer.updatePlayerUI()
@@ -25,6 +32,8 @@ while windowOpen:
     # Switch player if time = 0
     if pygame.time.get_ticks() - game.startTurnTime > game.maxTimePerTurn:
         currentPlayer = game.switchPlayer()
+
+    keys = pygame.key.get_pressed()
 
     # events
     for event in pygame.event.get():
@@ -38,9 +47,6 @@ while windowOpen:
                 game.rocketShot = True
                 currentPlayer.isShooting = False
                 currentPlayer.shootPowerBar.width = 0
-
-
-    keys = pygame.key.get_pressed()
 
     # Weapon selection
     if keys[pygame.K_1]:
