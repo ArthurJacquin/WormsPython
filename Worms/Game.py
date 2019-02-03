@@ -51,11 +51,11 @@ class Game:
     def redrawGameWindow(self, window, screenHeight, screenWidth):
         window.blit(self.bg, (0, 0))
 
-        # Timer
-        window.blit(self.timerText, (10, 10))
-
         # Ground
         pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
+
+        # Timer
+        window.blit(self.timerText, (10, 10))
 
         # Selected weapon
         if self.rocketSelected:
@@ -69,6 +69,10 @@ class Game:
 
         # Crosshair
         self.players[self.currentPlayerIndex % len(self.players)].crosshair.draw(window)
+
+        # Shoot power bar
+        if self.players[self.currentPlayerIndex % len(self.players)].isShooting:
+            self.players[self.currentPlayerIndex % len(self.players)].shootPowerBar.draw(window)
 
         # Weapons
         if self.rocketShot:
@@ -94,4 +98,8 @@ class Game:
         self.currentTurnTime = round(self.startTurnTime / 1000)
 
         return self.players[self.currentPlayerIndex % len(self.players)]
+
+    def updatePower(self):
+        self.players[self.currentPlayerIndex % len(self.players)].shootPowerBar.width += 1
+        self.rocket.vel += 0.2
 

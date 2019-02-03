@@ -20,7 +20,7 @@ while windowOpen:
     game.clock.tick(60)
     game.updateTime()
 
-    currentPlayer.UpdateCrosshairPosition()
+    currentPlayer.updatePlayerUI()
 
     # Switch player if time = 0
     if pygame.time.get_ticks() - game.startTurnTime > game.maxTimePerTurn:
@@ -30,6 +30,15 @@ while windowOpen:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             windowOpen = 0
+
+        if event.type == pygame.KEYUP and currentPlayer.isShooting:
+            if event.key == pygame.K_SPACE and game.rocketSelected:
+                rocket.setupForShoot(currentPlayer, currentPlayer.facing)
+                currentPlayer.hasShot = True
+                game.rocketShot = True
+                currentPlayer.isShooting = False
+                currentPlayer.shootPowerBar.width = 0
+
 
     keys = pygame.key.get_pressed()
 
@@ -58,10 +67,19 @@ while windowOpen:
     elif keys[pygame.K_SPACE] and not currentPlayer.hasShot:
 
         if game.rocketSelected:
-            # Rocket shot
-            rocket.setupForShoot(currentPlayer, currentPlayer.facing)
-            currentPlayer.hasShot = True
-            game.rocketShot = True
+            # Increase power
+            if not currentPlayer.isShooting:
+                currentPlayer.isShooting = True
+
+            game.updatePower()
+
+            #Shoot if max power
+            if rocket.vel >= 20:
+                rocket.setupForShoot(currentPlayer, currentPlayer.facing)
+                currentPlayer.hasShot = True
+                game.rocketShot = True
+                currentPlayer.isShooting = False
+                currentPlayer.shootPowerBar.width = 0
 
         if game.grenadeSelected:
             # Grenade shot
@@ -113,7 +131,7 @@ while windowOpen:
     if game.rocketShot and rocket.y + 3 < screenHeight - 25 and rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0: # Si pas de collision
             game.time += 0.05
             newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
-                                                  pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, currentPlayer.facing, game.time)
+                                                  pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
 
             rocket.x = newPos.x
             rocket.y = newPos.y
@@ -126,6 +144,7 @@ while windowOpen:
             game.rocketShot = False
             game.rocketSelected = False
             game.time = 0
+            game.rocket.vel = 0
 
             #player switch
             game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
@@ -136,7 +155,7 @@ while windowOpen:
         if grenade.x < screenWidth and grenade.x > 0 and grenade.y < screenHeight and grenade.y > 0:
             game.time += 0.05
             newPos = Physics.CalculateNexPosition(pygame.math.Vector2(grenade.x, grenade.y), grenade.vel,
-                                                  pygame.math.Vector2(0, 0), currentPlayer.crosshair.angle, currentPlayer.facing, game.time)
+                                                  pygame.math.Vector2(0, 0), currentPlayer.crosshair.angle, game.time)
 
             grenade.x = newPos.x
             grenade.y = newPos.y

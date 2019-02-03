@@ -3,6 +3,7 @@ import math
 import pygame
 from math import cos, sin
 from Worms.Crosshair import *
+from Worms.ShootPowerBar import *
 
 
 class Player(object):
@@ -18,9 +19,11 @@ class Player(object):
         self.left = False  # Is player looking left ?
         self.right = False  # Is player looking right ?
         self.walkCount = 0  # Index of the sprite to display when walking
+        self.isShooting = False
         self.hasShot = False  # Has player already shoot ?
         self.facing = 1  # 1 if player is looking right, -1 if he is looking left
-        self.crosshair = Crosshair(self.x + self.width / 2, self.y + self.height / 2)
+        self.crosshair = Crosshair(self.x + self.width / 2, self.y + self.height / 2) # player crosshair
+        self.shootPowerBar = ShootPowerBar(self.x - 20, self.y + 40)
 
         # Player Sprites
         self.walkRight = [pygame.image.load('Images\Rwalk1.png'),
@@ -69,6 +72,11 @@ class Player(object):
         else:
             win.blit(self.char, (self.x, self.y))
 
-    def UpdateCrosshairPosition(self):
+    def updatePlayerUI(self):
+        # Crosshair
         self.crosshair.x = (self.x + self.width / 2) + self.crosshair.distanceToPlayer * math.cos(math.radians(self.crosshair.angle))
         self.crosshair.y = (self.y + self.height / 2) + self.crosshair.distanceToPlayer * -math.sin(math.radians(self.crosshair.angle))
+
+        # Power bar
+        self.shootPowerBar.x = self.x - 20
+        self.shootPowerBar.y = self.y + 40

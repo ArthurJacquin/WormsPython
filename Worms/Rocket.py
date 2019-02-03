@@ -8,7 +8,7 @@ class Rocket(object):
         self.radius = 0
         self.color = (255, 0, 0)
         self.facing = 1
-        self.vel = 10
+        self.vel = 0
         self.mass = 5
         # self.sprite = pygame.image.load('Images\Rocket.jpg')
 
