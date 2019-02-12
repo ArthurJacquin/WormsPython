@@ -1,5 +1,6 @@
 from Worms.Game import *
 from Worms.GroundGenerator import *
+from Worms.Collision import *
 from Worms.Menu import *
 
 
@@ -138,13 +139,15 @@ while windowOpen:
         currentPlayer.facing = 1
 
     # Rocket
-    if game.rocketShot and rocket.y + 3 < screenHeight - 25 and rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0: # Si pas de collision
+    if game.rocketShot: #and rocket.y + 3 < screenHeight - 25 and rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0: # Si pas de collision
             game.time += 0.05
             newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
                                                   pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
-
             rocket.x = newPos.x
             rocket.y = newPos.y
+
+            if GroundCollision:
+                print("Impact")
 
     #Collision -> explosion
     elif game.rocketShot:

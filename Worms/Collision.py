@@ -5,16 +5,27 @@ from Worms.Grenade import *
 from Worms.GroundGenerator import *
 from Worms.main import *
 
-#récupération de la position de la balle
-def GroundCollisionRocket(rocket, sol):
+
+#détection collision
+def GroundCollision(rocket, grenade, sol):
     pos = (rocket.x, rocket.y)
+    pos2 = (grenade.x, grenade.y)
+    collision = False;
     for i in sol:
         if pos == sol[i]:
-            impactPos = pygame.math.Vector2(rocket.x + (rocket.radius/2), rocket.y + (rocket.radius/2))
-            break
-    return impactPos
+            collision = True;
+            return collision
+        elif pos2 == sol[i]:
+            collision = True;
+            return collision
 
-def GroundCollisionGrenade(grenade, sol):
+#point d'impact de la collision
+def ImpactCollisionRocket(rocket, sol):
+    if GroundCollision():
+        impactPos = pygame.math.Vector2(rocket.x + (rocket.radius / 2), rocket.y + (rocket.radius / 2))
+        return impactPos
+
+def ImpactCollisionGrenade(grenade, sol):
     pos = (rocket.x, rocket.y)
     for i in sol :
         if pos == sol[i]:
@@ -40,7 +51,7 @@ def GroundNormal(impactPos, sol):
     return normal
 
 #Collision avec le sol
-def Rebond(impactPos, grenade, sol):
-    rebonds = 0
-    while(rebonds != 2):
+#def Rebond(impactPos, grenade, sol):
+    #rebonds = 0
+    #while(rebonds != 2):
         #calcul du rebond
