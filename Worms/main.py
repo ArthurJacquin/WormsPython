@@ -1,8 +1,8 @@
 from Worms.Game import *
 from Worms.GroundGenerator import *
 from Worms.Collision import *
+import numpy as np
 from Worms.Menu import *
-
 
 pygame.init()
 
@@ -145,9 +145,15 @@ while windowOpen:
                                                   pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
             rocket.x = newPos.x
             rocket.y = newPos.y
+            pos = (rocket.x, rocket.y)
 
-            if GroundCollision:
-                print("Impact")
+
+            for i in sol:
+                if pos == sol:
+                    continue
+                dist = np.linalg.norm(pos - sol[i])
+                if dist < rocket.radius:
+                    print("collision")
 
     #Collision -> explosion
     elif game.rocketShot:

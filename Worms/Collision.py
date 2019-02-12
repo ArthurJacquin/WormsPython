@@ -3,37 +3,34 @@ from Worms.Physics import *
 from Worms.Rocket import *
 from Worms.Grenade import *
 from Worms.GroundGenerator import *
-from Worms.main import *
 
-
-#détection collision
+# détection collision
 def GroundCollision(rocket, grenade, sol):
     pos = (rocket.x, rocket.y)
     pos2 = (grenade.x, grenade.y)
-    collision = False;
     for i in sol:
-        if pos == sol[i]:
-            collision = True;
-            return collision
-        elif pos2 == sol[i]:
-            collision = True;
-            return collision
+        if pos == sol:
+            continue
+        d = pos.get_distance(sol)
+        if d<rocket.radius:
+            print("collision")
 
-#point d'impact de la collision
+# point d'impact de la collision
 def ImpactCollisionRocket(rocket, sol):
-    if GroundCollision():
+    if GroundCollision(rocket, grenade, sol):
         impactPos = pygame.math.Vector2(rocket.x + (rocket.radius / 2), rocket.y + (rocket.radius / 2))
         return impactPos
 
 def ImpactCollisionGrenade(grenade, sol):
     pos = (rocket.x, rocket.y)
-    for i in sol :
+    for i in sol:
         if pos == sol[i]:
-            impactPos = pygame.math.Vector2(grenade.x + (grenade.radius/2), grenade.y + (grenade.radius/2))
+            impactPos = pygame.math.Vector2(grenade.x + (grenade.radius / 2), grenade.y + (grenade.radius / 2))
             break
     return impactPos
 
-#Calcul normal sol pour rebonds
+
+# Calcul normal sol pour rebonds
 def GroundNormal(impactPos, sol):
     pointA = impactPos + 1
     pointB = pygame.math.Vector2(impactPos.x - 1, impactPos.y)
@@ -42,16 +39,16 @@ def GroundNormal(impactPos, sol):
     normal = pygame.math.Vector2(0, 0)
     tabPoint = [pointA, pointB, pointC, pointD]
 
-    #pour chaque point dans le terrain, on calcule la moyenne des vecteurs des points
-    for point in tabPoint :
+    # pour chaque point dans le terrain, on calcule la moyenne des vecteurs des points
+    for point in tabPoint:
         if point in sol:
             normalPoint = normalPoint + tabPoint[point]
 
     normal = pygame.math.Vector2(impactPos, normalPoint)
     return normal
 
-#Collision avec le sol
-#def Rebond(impactPos, grenade, sol):
-    #rebonds = 0
-    #while(rebonds != 2):
-        #calcul du rebond
+# Collision avec le sol
+# def Rebond(impactPos, grenade, sol):
+# rebonds = 0
+# while(rebonds != 2):
+# calcul du rebond
