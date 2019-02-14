@@ -7,7 +7,7 @@ from Worms.GroundGenerator import *
 
 
 class Game:
-    def __init__(self, sol):
+    def __init__(self, sol, screenHeight, screenWidth):
 
         self.sol = sol
         # Player
@@ -49,12 +49,16 @@ class Game:
         self.bazookaSprite = pygame.image.load('Images\Bazooka.png')
         self.grenadeSprite = pygame.image.load('Images\Grenade.png')
 
+        #ground generation
+        groundGenerator(screenHeight, screenWidth, self.sol)
+
     # Update window
     def redrawGameWindow(self, window, screenHeight, screenWidth):
         window.blit(self.bg, (0, 0))
         window.blit(self.timerText, (10, 10))
 
-        groundGenerator(screenHeight, screenWidth, window, self.sol, 0)
+        groundRefresh(screenHeight, window, self.sol)
+
         pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
 
         # Timer

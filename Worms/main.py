@@ -12,13 +12,13 @@ screenHeight = 480
 window = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Worms")
 sol = list()
-game = Game(sol)
+game = Game(sol, screenHeight, screenWidth)
 menu = Menu()
 currentPlayer = game.players[game.currentPlayerIndex]
 rocket = game.rocket
 grenade = game.grenade
 
-groundGenerator(screenHeight, screenWidth, window, sol, 1)
+#groundGenerator(screenHeight, screenWidth, window, sol, 1)
 
 # main loop
 windowOpen = 1
@@ -148,12 +148,7 @@ while windowOpen:
             pos = (rocket.x, rocket.y)
 
 
-            for i in sol:
-                if pos == sol:
-                    continue
-                dist = np.linalg.norm(pos - sol[i])
-                if dist < rocket.radius:
-                    print("collision")
+
 
     #Collision -> explosion
     elif game.rocketShot:
