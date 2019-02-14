@@ -5,15 +5,10 @@ from Worms.Grenade import *
 from Worms.GroundGenerator import *
 
 # détection collision
-def GroundCollision(rocket, grenade, sol):
-    pos = (rocket.x, rocket.y)
-    pos2 = (grenade.x, grenade.y)
-    for i in sol:
-        if pos == sol:
-            continue
-        d = pos.get_distance(sol)
-        if d<rocket.radius:
-            print("collision")
+def GroundCollisionPlayer(player, tabGround):
+    for i in tabGround:
+        if player.pixelDetector in tabGround:
+                return True
 
 # point d'impact de la collision
 def ImpactCollisionRocket(rocket, sol):

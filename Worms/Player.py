@@ -25,6 +25,9 @@ class Player(object):
         self.crosshair = Crosshair(self.x + self.width / 2, self.y + self.height / 2) # player crosshair
         self.shootPowerBar = ShootPowerBar(self.x - 20, self.y + 40)
 
+        #collision
+        self.pixelDetector = (self.x, self.y + self.height)
+
         # Player Sprites
         self.walkRight = [pygame.image.load('Images\Rwalk1.png'),
                           pygame.image.load('Images\Rwalk2.png'),

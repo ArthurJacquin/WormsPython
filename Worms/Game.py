@@ -7,12 +7,13 @@ from Worms.GroundGenerator import *
 
 
 class Game:
-    def __init__(self, sol):
+    def __init__(self):
 
-        self.sol = sol
+        self.sol = []
+
         # Player
-        self.player = Player(100, 350, 60, 60)
-        self.player2 = Player(400, 350, 60, 60)
+        self.player = Player(200, 60, 60, 100)
+        self.player2 = Player(300, 60, 60, 100)
 
         self.players = [self.player, self.player2]
         self.currentPlayerIndex = 0
@@ -54,8 +55,8 @@ class Game:
         window.blit(self.bg, (0, 0))
         window.blit(self.timerText, (10, 10))
 
-        groundGenerator(screenHeight, screenWidth, window, self.sol, 0)
-        pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
+        groundGenerator(screenHeight, screenWidth, window, self.sol, 0, )
+        #pygame.draw.rect(window, (88, 20, 0), (0, screenHeight - 25, screenWidth, 25))
 
         # Timer
         window.blit(self.timerText, (10, 10))
