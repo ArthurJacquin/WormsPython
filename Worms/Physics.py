@@ -1,5 +1,6 @@
 import math
 import pygame
+from Worms.Collision import *
 
 
 class Physics:
@@ -21,3 +22,17 @@ class Physics:
         newY = startPos.y - ((speedVec.y * time) + (forces.y * 0.5 * time ** 2))
 
         return pygame.math.Vector2(newX, newY)
+'''
+    @staticmethod
+    def GetTrajectory(self, object, sol, startPos, speed, wind, angle):
+        position = startPos
+        trajPoints = list()
+        time = 0
+        while(not GroundCollision(object, sol)):
+            trajPoints.append(CalculateNextPosition(startPos, speed, wind, angle, time))
+            time += 0.05
+
+
+        return trajPoints
+'''
+
