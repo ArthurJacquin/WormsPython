@@ -25,8 +25,8 @@ class Menu:
             playText = self.font.render('PLAY', True, (255, 255, 255))
             quitText = self.font.render('QUIT', True, (255, 255, 255))
 
-            window.blit(playText, (screenWidth / 2 - 70, screenHeight / 2 - 90))
-            window.blit(quitText, (screenWidth / 2 - 70, screenHeight / 2 + 90))
+            window.blit(playText, (screenWidth / 2 - 70, screenHeight / 2 - 85))
+            window.blit(quitText, (screenWidth / 2 - 70, screenHeight / 2 + 40))
 
             mouse = pygame.mouse.get_pos()
             click = pygame.mouse.get_pressed()
