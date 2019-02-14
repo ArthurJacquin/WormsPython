@@ -1,6 +1,7 @@
 from Worms.Game import *
 from Worms.GroundGenerator import *
 from Worms.Collision import *
+import numpy as np
 from Worms.Menu import *
 
 pygame.init()
@@ -10,14 +11,14 @@ screenWidth = 850
 screenHeight = 480
 window = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Worms")
-game = Game()
+sol = list()
+game = Game(sol, screenHeight, screenWidth)
 menu = Menu()
 currentPlayer = game.players[game.currentPlayerIndex]
 rocket = game.rocket
 grenade = game.grenade
 
-groundGenerator(screenHeight, screenWidth, window, game.sol, 1)
-#surface = pygame.PixelArray.make_surface(game.sol)
+#groundGenerator(screenHeight, screenWidth, window, sol, 1)
 
 # main loop
 windowOpen = 1
@@ -137,11 +138,6 @@ while windowOpen:
     else:
         currentPlayer.facing = 1
 
-    #collision player
-    #if GroundCollisionPlayer(player, sol):
-    #    print("collide")
-
-
     # Rocket
     if game.rocketShot: #and rocket.y + 3 < screenHeight - 25 and rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0: # Si pas de collision
             game.time += 0.05
@@ -150,6 +146,9 @@ while windowOpen:
             rocket.x = newPos.x
             rocket.y = newPos.y
             pos = (rocket.x, rocket.y)
+
+
+
 
     #Collision -> explosion
     elif game.rocketShot:
