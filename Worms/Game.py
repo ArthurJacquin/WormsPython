@@ -10,9 +10,10 @@ class Game:
     def __init__(self, sol, screenHeight, screenWidth):
 
         self.sol = sol
+
         # Player
-        self.player = Player(100, 350, 60, 60)
-        self.player2 = Player(400, 350, 60, 60)
+        self.player = Player(100, 200, 60, 60)
+        self.player2 = Player(400, 200, 60, 60)
 
         self.players = [self.player, self.player2]
         self.currentPlayerIndex = 0

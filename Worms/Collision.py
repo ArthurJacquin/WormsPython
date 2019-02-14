@@ -5,9 +5,9 @@ from Worms.Grenade import *
 from Worms.GroundGenerator import *
 
 # détection collision
-def GroundCollisionPlayer(player, tabGround):
-    for i in tabGround:
-        if player.pixelDetector in tabGround:
+def GroundCollisionPlayer(objet, tabSurface):
+    for i in tabSurface[objet.x - 10: objet.y + 10]:
+        if objet in tabSurface:
                 return True
 
 # point d'impact de la collision

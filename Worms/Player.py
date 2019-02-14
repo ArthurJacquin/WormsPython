@@ -26,7 +26,7 @@ class Player(object):
         self.shootPowerBar = ShootPowerBar(self.x - 20, self.y + 40)
 
         #collision
-        self.pixelDetector = (self.x, self.y + self.height)
+        self.pixelDetector = (self.x, self.y)
 
         # Player Sprites
         self.walkRight = [pygame.image.load('Images\Rwalk1.png'),

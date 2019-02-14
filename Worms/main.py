@@ -109,9 +109,21 @@ while windowOpen:
     if keys[pygame.K_DOWN] and currentPlayer.crosshair.angle > 0:
         currentPlayer.crosshair.move(-1)
 
+    # Player with ground collision
+    fall = 200
     for player in game.players:
-        if player.y + 45 < screenHeight - 25 and not player.isJumping:
-            player.y += 9
+        pixelDetector = (player.x, player.y + player.height - 20)
+        for i in sol[player.x - 20 : player.x + 20]:
+           if pixelDetector not in sol:
+               fall -= 1
+               print("fall")
+           else:
+                player.y = sol
+                print("collision")
+        if fall >= 1:
+            player.y += 1
+        else :
+            continue
 
     # Jump
     if not currentPlayer.isJumping:
@@ -146,9 +158,6 @@ while windowOpen:
             rocket.x = newPos.x
             rocket.y = newPos.y
             pos = (rocket.x, rocket.y)
-
-
-
 
     #Collision -> explosion
     elif game.rocketShot:
