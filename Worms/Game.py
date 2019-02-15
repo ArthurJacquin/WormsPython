@@ -156,10 +156,12 @@ class Game:
 
 
     def damagePlayer(self, player):
+        i = 0
         for p in self.players:
             if p == player:
                 self.players.remove(p)
-                break
+                return i
+            i += 1
 
     def endGame(self, menu):
         menu.isActive = True

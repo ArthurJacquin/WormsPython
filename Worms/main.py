@@ -214,10 +214,14 @@ while windowOpen:
                     game.rocketSelected = False
                     game.time = 0
                     game.rocket.vel = 3
-                    # todo : gérer player life
-                    game.damagePlayer(player)
+
+                    deadPlayerIndex = game.damagePlayer(player)
 
                     # player switch
+                    if(deadPlayerIndex < game.currentPlayerIndex):
+                        game.currentPlayerIndex -= 1
+                        currentPlayer = game.players[game.currentPlayerIndex]
+
                     game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
                     currentPlayer = game.switchPlayer()
 
@@ -251,8 +255,6 @@ while windowOpen:
                 game.time = 0
                 game.grenade.vel = 0
 
-                # todo : gérer player life
-
                 # player switch
                 game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
                 currentPlayer = game.switchPlayer()
@@ -271,13 +273,18 @@ while windowOpen:
                     game.time = 0
                     game.grenade.vel = 0
                     print("collision with player")
-                    # todo : gérer player life
 
+                    deadPlayerIndex = game.damagePlayer(player)
 
                     # player switch
-                    game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+                    if (deadPlayerIndex < game.currentPlayerIndex):
+                        game.currentPlayerIndex -= 1
+                        currentPlayer = game.players[game.currentPlayerIndex]
+
+                    game.players[game.currentPlayerIndex % len(game.players) - 1].hasShot = False
                     currentPlayer = game.switchPlayer()
 
+    #Return to menu if 1 player left
     if(len(game.players) <= 1):
         game.endGame(menu)
         game = Game(sol, screenWidth, screenHeight)

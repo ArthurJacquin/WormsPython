@@ -8,7 +8,7 @@ class Crosshair(object):
         self.distanceToPlayer = 50  # Radius of the circle between the player and the crosshair
         self.x = self.rotationCenterX + self.distanceToPlayer  # position X of the crosshair
         self.y = self.rotationCenterY  # position Y of the crosshair
-        self.radius = 10  # Radius of the crosshair
+        self.radius = 7  # Radius of the crosshair
         self.angle = 0  # angle between horizontal axis and the crosshair
 
     def draw(self, win):
