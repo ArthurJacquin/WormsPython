@@ -8,7 +8,7 @@ class Grenade():
 		self.y = y
 		self.radius = radius
 		self.color = (0, 0, 255)
-		self.vel = 5
+		self.vel = 0
 		self.facing = facing
 		self.mass = 5
 		self.rebonds = 0

@@ -188,7 +188,7 @@ while windowOpen:
                 game.rocketShot = False
                 game.rocketSelected = False
                 game.time = 0
-                game.rocket.vel = 0
+                game.rocket.vel = 3
 
                 # player switch
                 game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
@@ -196,7 +196,7 @@ while windowOpen:
 
         # Rocket with player collision
         for player in game.players:
-            if player.rect.collidepoint(rocket.x, rocket.y)and player != currentPlayer:
+            if player.rect.collidepoint(rocket.x, rocket.y) and player != currentPlayer:
                 rocket.x = player.x + player.width/2
                 rocket.y = player.y + player.height/2
                 rocket.radius += 2
@@ -205,7 +205,7 @@ while windowOpen:
                     game.rocketShot = False
                     game.rocketSelected = False
                     game.time = 0
-                    game.rocket.vel = 0
+                    game.rocket.vel = 3
                     # todo : gérer player life
 
                     # player switch
@@ -240,6 +240,7 @@ while windowOpen:
                 game.grenadeSelected = False
                 game.time = 0
                 game.grenade.vel = 0
+
                 # todo : gérer player life
 
                 # player switch
