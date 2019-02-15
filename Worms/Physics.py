@@ -22,17 +22,20 @@ class Physics:
         newY = startPos.y - ((speedVec.y * time) + (forces.y * 0.5 * time ** 2))
 
         return pygame.math.Vector2(newX, newY)
-'''
+
     @staticmethod
-    def GetTrajectory(self, object, sol, startPos, speed, wind, angle):
-        position = startPos
-        trajPoints = list()
+    def GetTrajectory(startpos, speed, sol, wind, angle):
+        trajPoints = [(round(startpos.x),round(startpos.y))]
         time = 0
-        while(not GroundCollision(object, sol)):
-            trajPoints.append(CalculateNextPosition(startPos, speed, wind, angle, time))
+
+        newPos = Physics.CalculateNexPosition(pygame.math.Vector2(startpos.x,startpos.y), speed, wind, angle, time)
+
+        while not sol[round(newPos[0])][1] <= newPos[1] and 0 < newPos[0] < 840:
+            trajPoints.append((round(newPos.x), round(newPos.y)))
+            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(startpos.x,startpos.y), speed, wind, angle, time)
             time += 0.05
 
 
         return trajPoints
-'''
+
 

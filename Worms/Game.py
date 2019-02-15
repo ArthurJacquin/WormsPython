@@ -23,6 +23,8 @@ class Game:
 
         self.time = 0
 
+        self.wind = (0, 0)
+
         # Weapons creation
         self.rocket = Rocket()
         self.grenade = Grenade(-50, -50, 0, 1)
@@ -53,14 +55,16 @@ class Game:
         #ground generation
         groundGenerator(screenHeight, screenWidth, self.sol)
 
+        #Trajectory
+        self.displayTrajectory = False
+        self.powerForDisplay = 2
+
     # Update window
     def redrawGameWindow(self, window, screenHeight, screenWidth):
         window.blit(self.bg, (0, 0))
         window.blit(self.timerText, (10, 10))
 
         groundRefresh(screenHeight, window, self.sol)
-
-        #pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
 
         # Timer
         window.blit(self.timerText, (10, 10))
@@ -78,9 +82,25 @@ class Game:
         # Crosshair
         self.players[self.currentPlayerIndex % len(self.players)].crosshair.draw(window)
 
+        # Trajectory
+        if self.displayTrajectory:
+            if self.rocketSelected:
+                traj = Physics.GetTrajectory(pygame.math.Vector2(self.players[self.currentPlayerIndex].x + self.players[self.currentPlayerIndex].width/2,self.players[self.currentPlayerIndex].y + self.players[self.currentPlayerIndex].height/2),
+                                             self.powerForDisplay, self.sol, self.wind, self.players[self.currentPlayerIndex].crosshair.angle)
+
+                for pixel in traj:
+                    window.set_at(pixel, (0, 0, 0))
+
+            if self.grenadeSelected:
+                traj = Physics.GetTrajectory(pygame.math.Vector2(self.players[self.currentPlayerIndex].x + self.players[self.currentPlayerIndex].width/2,self.players[self.currentPlayerIndex].y + self.players[self.currentPlayerIndex].height/2),
+                                             self.powerForDisplay, self.sol, self.wind, self.players[self.currentPlayerIndex].crosshair.angle)
+
+                for pixel in traj:
+                    window.set_at(pixel, (0, 0, 0))
+
         # Shoot power bar
-        if self.players[self.currentPlayerIndex % len(self.players)].isShooting:
-            self.players[self.currentPlayerIndex % len(self.players)].shootPowerBar.draw(window)
+        if self.players[self.currentPlayerIndex].isShooting:
+            self.players[self.currentPlayerIndex].shootPowerBar.draw(window)
 
         # Weapons
         if self.rocketShot:
@@ -97,19 +117,20 @@ class Game:
 
     # Switch to next player
     def switchPlayer(self):
-        self.players[self.currentPlayerIndex % len(self.players)].right = False
-        self.players[self.currentPlayerIndex % len(self.players)].left = False
+        self.players[self.currentPlayerIndex].right = False
+        self.players[self.currentPlayerIndex].left = False
 
 
-        self.currentPlayerIndex += 1
+        self.currentPlayerIndex = (self.currentPlayerIndex + 1) % len(self.players)
         self.startTurnTime = pygame.time.get_ticks()
         self.currentTurnTime = round(self.startTurnTime / 1000)
 
-        return self.players[self.currentPlayerIndex % len(self.players)]
+        return self.players[self.currentPlayerIndex]
 
     def updatePower(self):
-        self.players[self.currentPlayerIndex % len(self.players)].shootPowerBar.width += 1
+        self.players[self.currentPlayerIndex].shootPowerBar.width += 1
         self.rocket.vel += 0.2
+
 
 
 

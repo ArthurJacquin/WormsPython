@@ -59,6 +59,10 @@ while windowOpen:
                 currentPlayer.isShooting = False
                 currentPlayer.shootPowerBar.width = 0
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_t:
+                game.displayTrajectory = not game.displayTrajectory
+
     # Weapon selection
     if keys[pygame.K_1]:
         game.rocketSelected = True
@@ -122,6 +126,11 @@ while windowOpen:
     if keys[pygame.K_DOWN] and currentPlayer.crosshair.angle > 0:
         currentPlayer.crosshair.move(-1)
 
+    if keys[pygame.K_KP_PLUS]:
+        game.powerForDisplay += 0.2
+    if keys[pygame.K_KP_MINUS]:
+        game.powerForDisplay -= 0.2
+
     # Player with ground collision
     fall = 0
     for player in game.players:
@@ -166,7 +175,7 @@ while windowOpen:
     if game.rocketShot:
         game.time += 0.05
         newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
-                                              pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
+                                              game.wind, currentPlayer.crosshair.angle, game.time)
         #Rocket with Ground collision
         for i in sol[int(rocket.x) - 20 : int(rocket.x) + 20]:
             if rocket.y + rocket.radius <= i[1]:
@@ -194,9 +203,9 @@ while windowOpen:
 
         # Rocket with player collision
         for player in game.players:
-            if player.rect.collidepoint(rocket.x, rocket.y) and player != currentPlayer:
-                rocket.x = player.x + player.width/2
-                rocket.y = player.y + player.height/2
+            if player.rect.collidepoint(rocket.x, rocket.y):
+                rocket.x = player.rect.centerx
+                rocket.y = player.rect.centery
                 rocket.radius += 2
                 if rocket.radius > 20:
                     rocket.radius = 0
