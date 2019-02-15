@@ -148,38 +148,37 @@ while windowOpen:
     else:
         currentPlayer.facing = 1
 
+    fallRocket = 0
     # Rocket
     if game.rocketShot: #and rocket.y + 3 < screenHeight - 25 and rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0: # Si pas de collision
         game.time += 0.05
         newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
                                               pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
-        rocket.x = newPos.x
-        rocket.y = newPos.y
-        pos = (rocket.x, rocket.y)
-
         #Rocket with Ground collision
-        for i in sol[rocket.x - 50 : rocket.x + 50]:
-            if pos in sol:
-                print("collision rocket")
-                pos = sol
+        for i in sol:#[int(rocket.x) - 20 : int(rocket.x) + 20]:
+            if rocket.y - 13 <= i[1]:
+                fallRocket = 0
+            else:
+                fallRocket = 1
                 break
 
-
-
-
-    ''''Collision -> explosion
-    elif game.rocketShot:
-        rocket.radius += 2
-        if rocket.radius > 30:
-            rocket.radius = 0
-            game.rocketShot = False
-            game.rocketSelected = False
-            game.time = 0
-            game.rocket.vel = 0
+        if fallRocket == 0:
+            rocket.y = newPos.y
+            rocket.x = newPos.x
+        else:
+            rocket.y = rocket.y
+            rocket.x = rocket.x
+            rocket.radius += 2
+            if rocket.radius > 30:
+                rocket.radius = 0
+                game.rocketShot = False
+                game.rocketSelected = False
+                game.time = 0
+                game.rocket.vel = 0
 
             #player switch
             game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
-            currentPlayer = game.switchPlayer()'''
+            currentPlayer = game.switchPlayer()
 
     # Grenade
     if game.grenadeShot:
