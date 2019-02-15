@@ -25,7 +25,7 @@ windowOpen = 1
 while windowOpen:
 
     # time between frames
-    game.clock.tick(60)
+    game.clock.tick(30)
 
     if menu.isActive:
         menu.displayMenu(window, screenWidth, screenHeight)
@@ -164,7 +164,7 @@ while windowOpen:
 
     fallRocket = 0
     # Rocket
-    if game.rocketShot: #and rocket.y + 3 < screenHeight - 25 and rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0: # Si pas de collision
+    if game.rocketShot:
         game.time += 0.05
         newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
                                               pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
@@ -189,22 +189,27 @@ while windowOpen:
                 game.time = 0
                 game.rocket.vel = 0
 
-        # Rocket with player collision
-        if player.rect.collidepoint(rocket.x, rocket.y):
-            rocket.x = player.x + player.width/2
-            rocket.y = player.y + player.height/2
-            rocket.radius += 2
-            if rocket.radius > 20:
-                rocket.radius = 0
-                game.rocketShot = False
-                game.rocketSelected = False
-                game.time = 0
-                game.rocket.vel = 0
-            # todo : gérer player life
+                # player switch
+                game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+                currentPlayer = game.switchPlayer()
 
-        # player switch
-        #game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
-        #currentPlayer = game.switchPlayer()
+        # Rocket with player collision
+        for player in game.players:
+            if player.rect.collidepoint(rocket.x, rocket.y) and player != currentPlayer:
+                rocket.x = player.x + player.width/2
+                rocket.y = player.y + player.height/2
+                rocket.radius += 2
+                if rocket.radius > 20:
+                    rocket.radius = 0
+                    game.rocketShot = False
+                    game.rocketSelected = False
+                    game.time = 0
+                    game.rocket.vel = 0
+                    # todo : gérer player life
+
+                    # player switch
+                    game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+                    currentPlayer = game.switchPlayer()
 
     # Grenade
     rebonds = 0
@@ -234,9 +239,9 @@ while windowOpen:
             print("collision with player")
             # todo : gérer player life
 
-        # player switch
-        #game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
-        #currentPlayer = game.switchPlayer()
+            # player switch
+            #game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+            #currentPlayer = game.switchPlayer()
 
     game.redrawGameWindow(window, screenHeight, screenWidth)
 
