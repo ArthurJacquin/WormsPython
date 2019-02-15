@@ -1,7 +1,6 @@
 from Worms.Game import *
 from Worms.GroundGenerator import *
 from Worms.Collision import *
-import numpy as np
 from Worms.Menu import *
 
 pygame.init()
@@ -116,12 +115,11 @@ while windowOpen:
         for i in sol[player.x - 20 : player.x + 20]:
            if pixelDetector not in sol:
                fall -= 1
-               print("fall")
            else:
                 player.y = sol
-                print("collision")
-        if fall >= 1:
-            player.y += 1
+                #TODO : gérer collision avec le player ici : player.y = sol.x ?
+        #if fall >= 1:
+        #    player.y += 1
         else :
             continue
 
@@ -152,14 +150,24 @@ while windowOpen:
 
     # Rocket
     if game.rocketShot: #and rocket.y + 3 < screenHeight - 25 and rocket.x < screenWidth and rocket.x > 0 and rocket.y < screenHeight and rocket.y > 0: # Si pas de collision
-            game.time += 0.05
-            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
-                                                  pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
-            rocket.x = newPos.x
-            rocket.y = newPos.y
-            pos = (rocket.x, rocket.y)
+        game.time += 0.05
+        newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
+                                              pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
+        rocket.x = newPos.x
+        rocket.y = newPos.y
+        pos = (rocket.x, rocket.y)
 
-    #Collision -> explosion
+        #Rocket with Ground collision
+        for i in sol[rocket.x - 50 : rocket.x + 50]:
+            if pos in sol:
+                print("collision rocket")
+                pos = sol
+                break
+
+
+
+
+    ''''Collision -> explosion
     elif game.rocketShot:
         rocket.radius += 2
         if rocket.radius > 30:
@@ -171,7 +179,7 @@ while windowOpen:
 
             #player switch
             game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
-            currentPlayer = game.switchPlayer()
+            currentPlayer = game.switchPlayer()'''
 
     # Grenade
     if game.grenadeShot:
