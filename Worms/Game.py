@@ -32,7 +32,7 @@ class Game:
         self.grenadeSelected = False
 
         # Wind
-        self.wind = pygame.math.Vector2(random.randint(-10, 10), random.randint(-5, 5))
+        self.wind = pygame.math.Vector2(3, 2)
 
         # Background sprites
         self.bg = pygame.image.load('Images\Background.jpg')
@@ -51,7 +51,7 @@ class Game:
 
         #windText
         self.fontWind = pygame.font.Font('Font\Freesansbold.ttf', 20)
-        self.windText = self.fontWind.render("Wind : x: %d  y: %d" % (self.wind.x, self.wind.y), True, (0, 0, 0))
+        self.windText = self.fontWind.render("Wind : x: %.1f  y: %.1f" % (self.wind.x, self.wind.y * -1), True, (0, 0, 0))
 
         # Weapon sprites
         self.bazookaSprite = pygame.image.load('Images\Bazooka.png')
@@ -93,15 +93,18 @@ class Game:
         # Trajectory
         if self.displayTrajectory:
             if self.rocketSelected:
-                traj = Physics.GetTrajectory(pygame.math.Vector2(self.players[self.currentPlayerIndex].x + self.players[self.currentPlayerIndex].width/2,self.players[self.currentPlayerIndex].y + self.players[self.currentPlayerIndex].height/2),
-                                             self.powerForDisplay, self.sol, self.wind, self.players[self.currentPlayerIndex].crosshair.angle)
+                traj = Physics.GetTrajectory(pygame.math.Vector2(self.players[self.currentPlayerIndex].x + self.players[self.currentPlayerIndex].width/2,
+                                                                 self.players[self.currentPlayerIndex].y + self.players[self.currentPlayerIndex].height/2),
+                                                                 self.powerForDisplay, self.sol, self.players[self.currentPlayerIndex].crosshair.angle,
+                                                                 self.wind, True, 1)
 
                 for pixel in traj:
                     window.set_at(pixel, (0, 0, 0))
 
             if self.grenadeSelected:
-                traj = Physics.GetTrajectory(pygame.math.Vector2(self.players[self.currentPlayerIndex].x + self.players[self.currentPlayerIndex].width/2,self.players[self.currentPlayerIndex].y + self.players[self.currentPlayerIndex].height/2),
-                                             self.powerForDisplay, self.sol, self.wind, self.players[self.currentPlayerIndex].crosshair.angle)
+                traj = Physics.GetTrajectory(pygame.math.Vector2(self.players[self.currentPlayerIndex].x + self.players[self.currentPlayerIndex].width/2,
+                                                                 self.players[self.currentPlayerIndex].y + self.players[self.currentPlayerIndex].height/2),
+                                                                 self.powerForDisplay, self.sol, self.players[self.currentPlayerIndex].crosshair.angle)
 
                 for pixel in traj:
                     window.set_at(pixel, (0, 0, 0))
@@ -138,8 +141,9 @@ class Game:
         self.currentTurnTime = round(self.startTurnTime / 1000)
 
         #Update wind
-        self.wind = pygame.math.Vector2(random.randint(-10, 10), random.randint(-10, 10))
+        self.wind = pygame.math.Vector2(random.randrange(-5, 5), random.randrange(-2.0, 2.0))
 
+        self.windText = self.fontWind.render("Wind : x: %.1f  y: %.1f" % (self.wind.x, self.wind.y * -1), True, (0, 0, 0))
 
         self.powerForDisplay = 5
 
@@ -149,6 +153,17 @@ class Game:
         self.players[self.currentPlayerIndex].shootPowerBar.width += 1
         self.rocket.vel += 0.2
         self.grenade.vel += 0.2
+
+
+    def damagePlayer(self, player):
+        for p in self.players:
+            if p == player:
+                self.players.remove(p)
+                break
+
+    def endGame(self, menu):
+        menu.isActive = True
+
 
 
 

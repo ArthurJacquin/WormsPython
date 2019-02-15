@@ -12,6 +12,7 @@ class Grenade():
 		self.facing = facing
 		self.mass = 5
 		self.rebonds = 0
+		self.mass = 3
 
 	def draw(self, window):
 		"""Draw bullet"""
