@@ -6,19 +6,19 @@ from Worms.Menu import *
 
 pygame.init()
 
-# Open window
+# Window init
 screenWidth = 850
 screenHeight = 480
 window = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Worms")
+
+#Game init
 sol = list()
 game = Game(sol, screenHeight, screenWidth)
 menu = Menu()
 currentPlayer = game.players[game.currentPlayerIndex]
 rocket = game.rocket
 grenade = game.grenade
-
-#groundGenerator(screenHeight, screenWidth, window, sol, 1)
 
 # main loop
 windowOpen = 1
@@ -224,7 +224,7 @@ while windowOpen:
     if game.grenadeShot:
         game.time += 0.05
         newPos = Physics.CalculateNexPosition(pygame.math.Vector2(grenade.x, grenade.y), grenade.vel,
-                                              pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
+                                              pygame.math.Vector2(0, 0), currentPlayer.crosshair.angle, game.time)
 
         # Rocket with Ground collision
         for i in sol[int(grenade.x) - 10: int(grenade.x) + 10]:

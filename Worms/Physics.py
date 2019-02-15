@@ -14,7 +14,7 @@ class Physics:
     # Calculate coordinates of the projectile for the next frame
     @staticmethod
     def CalculateNexPosition(startPos, speed, wind, angle, time):
-        forces = pygame.math.Vector2(0, -9.81) + wind
+        forces = pygame.math.Vector2(0, -9.81)
         speedVec = pygame.math.Vector2(math.cos(math.radians(angle)) * speed, math.sin(math.radians(angle)) * speed)
 
         newX = startPos.x + speedVec.x * time

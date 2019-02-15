@@ -15,4 +15,4 @@ class Crosshair(object):
         pygame.draw.circle(win, (255, 0, 0), (round(self.x), round(self.y)), self.radius)
 
     def move(self, direction):
-        self.angle += 1.2 * direction
+        self.angle += 1.5 * direction

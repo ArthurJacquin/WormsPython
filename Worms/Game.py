@@ -23,8 +23,6 @@ class Game:
 
         self.time = 0
 
-        self.wind = (0, 0)
-
         # Weapons creation
         self.rocket = Rocket()
         self.grenade = Grenade(-50, -50, 0, 1)
@@ -32,6 +30,9 @@ class Game:
         # Weapon selected
         self.rocketSelected = False
         self.grenadeSelected = False
+
+        # Wind
+        self.wind = pygame.math.Vector2(random.randint(-10, 10), random.randint(-5, 5))
 
         # Background sprites
         self.bg = pygame.image.load('Images\Background.jpg')
@@ -41,12 +42,16 @@ class Game:
 
         # Turn time
         self.maxTimePerTurn = 60000
-        self.startTurnTime = pygame.time.get_ticks()
+        self.startTurnTime = 0
         self.currentTurnTime = round(self.startTurnTime / 1000)
 
         # Turn time text
-        self.timer = pygame.font.Font('Font\Freesansbold.ttf', 48)
-        self.timerText = self.timer.render(str(self.maxTimePerTurn), True, (255, 0, 0))
+        self.fontTime = pygame.font.Font('Font\Freesansbold.ttf', 48)
+        self.timerText = self.fontTime.render(str(self.maxTimePerTurn), True, (255, 0, 0))
+
+        #windText
+        self.fontWind = pygame.font.Font('Font\Freesansbold.ttf', 20)
+        self.windText = self.fontWind.render("Wind : x: %d  y: %d" % (self.wind.x, self.wind.y), True, (0, 0, 0))
 
         # Weapon sprites
         self.bazookaSprite = pygame.image.load('Images\Bazooka.png')
@@ -57,7 +62,7 @@ class Game:
 
         #Trajectory
         self.displayTrajectory = False
-        self.powerForDisplay = 2
+        self.powerForDisplay = 5
 
     # Update window
     def redrawGameWindow(self, window, screenHeight, screenWidth):
@@ -74,6 +79,9 @@ class Game:
             window.blit(self.bazookaSprite, (screenWidth - 50, screenHeight - 50))
         if self.grenadeSelected:
             window.blit(self.grenadeSprite, (screenWidth - 50, screenHeight - 50))
+
+        # Wind Indicator
+        window.blit(self.windText, (screenWidth - 200, 10))
 
         # Players
         for player in self.players:
@@ -108,12 +116,16 @@ class Game:
         if self.grenadeShot:
             self.grenade.draw(window)
 
+
+
         pygame.display.update()
 
     # Update time text
     def updateTime(self):
+        if self.startTurnTime == 0:
+            self.startTurnTime = pygame.time.get_ticks()
         self.currentTurnTime = round((self.maxTimePerTurn - (pygame.time.get_ticks() - self.startTurnTime)) / 1000)
-        self.timerText = self.timer.render(str(self.currentTurnTime), True, (255, 0, 0))
+        self.timerText = self.fontTime.render(str(self.currentTurnTime), True, (255, 0, 0))
 
     # Switch to next player
     def switchPlayer(self):
@@ -124,6 +136,12 @@ class Game:
         self.currentPlayerIndex = (self.currentPlayerIndex + 1) % len(self.players)
         self.startTurnTime = pygame.time.get_ticks()
         self.currentTurnTime = round(self.startTurnTime / 1000)
+
+        #Update wind
+        self.wind = pygame.math.Vector2(random.randint(-10, 10), random.randint(-10, 10))
+
+
+        self.powerForDisplay = 5
 
         return self.players[self.currentPlayerIndex]
 

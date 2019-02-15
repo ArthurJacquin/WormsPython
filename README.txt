@@ -10,3 +10,8 @@ Armes :
 1 : Grenade 
 2 : Rocket
 Espace : Tirer
+
+Affichage de trajectoire:
+T : Activer/Désactiver la trajectoire
++: Augmenter la puissance
+-: Réduire la puissance
