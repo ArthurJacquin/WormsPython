@@ -39,3 +39,4 @@ def CalculRebonds(grenade, time):
         #Debug
         print("rebonds : ", rebonds)
         rebonds += 1
+        return pygame.math.Vector2(grenade.x, grenade.y)

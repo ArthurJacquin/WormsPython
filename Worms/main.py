@@ -123,19 +123,18 @@ while windowOpen:
         currentPlayer.crosshair.move(-1)
 
     # Player with ground collision
-    fall = 200
+    fall = 0
     for player in game.players:
         pixelDetector = (player.x, player.y + player.height - 20)
         for i in sol[player.x - 20 : player.x + 20]:
            if pixelDetector not in sol:
-               fall -= 1
+               fall = 1
            else:
-                player.y = sol
-                #TODO : gérer collision avec le player ici : player.y = sol.x ?
-        #if fall >= 1:
-        #    player.y += 1
-        else :
-            continue
+                fall = 0
+        #if fall == 1:
+        #    player.y += 3
+        #else :
+            #todo: gérer la marche sur le sol
 
     # Jump
     if not currentPlayer.isJumping:
@@ -225,7 +224,13 @@ while windowOpen:
             grenade.x = newPos.x
             grenade.y = newPos.y
         else:
-            CalculRebonds(grenade, game.time)
+            if rebonds > 0 and rebonds <= 2:
+                grenade.vel -= 2
+                time = 0
+                newPosRebonds = Physics.CalculateNexPosition(pygame.math.Vector2(grenade.x, grenade.y), grenade.vel,
+                                                             pygame.math.Vector2(0, 0), 48, time)
+                grenade.x = -newPosRebonds.x
+                grenade.y = -newPosRebonds.y
 
         # Rocket with player collision
         if player.rect.collidepoint(grenade.x, grenade.y):
