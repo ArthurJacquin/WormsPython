@@ -27,6 +27,7 @@ class Player(object):
 
         #collision
         self.pixelDetector = (self.x, self.y)
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         # Player Sprites
         self.walkRight = [pygame.image.load('Images\Rwalk1.png'),

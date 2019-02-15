@@ -10,6 +10,8 @@ class Grenade():
 		self.color = (0, 0, 255)
 		self.vel = 10
 		self.facing = facing
+		self.mass = 5
+		self.rebonds = 0
 
 	def draw(self, window):
 		"""Draw bullet"""
@@ -19,9 +21,9 @@ class Grenade():
 		"""Draw curve"""
 		pygame.draw.lines(window, self.color, self.start, self.end, 3)
 
-	def grenadeShot(self):
-		speedVector = Physics.CalculateSpeedVector(self.vel, 45,self.facing)
-		newPos = Physics.CalculateNexPosition(pygame.math.Vector2(self.x, self.y), speedVector, 0.1, pygame.math.Vector2(0, 0))
-		self.x = newPos.x
-		self.y = newPos.y
-
+	# Setup the rocket object for a shoot
+	def setupForShoot(self, player, facing):
+		self.x = round(player.x + player.width // 2)
+		self.y = round(player.y + player.height // 2)
+		self.radius = 6
+		self.facing = facing

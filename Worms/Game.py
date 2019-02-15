@@ -60,7 +60,7 @@ class Game:
 
         groundRefresh(screenHeight, window, self.sol)
 
-        pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
+        #pygame.draw.rect(window, (88, 40, 0), (0, screenHeight - 25, screenWidth, 25))
 
         # Timer
         window.blit(self.timerText, (10, 10))

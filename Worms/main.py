@@ -1,6 +1,7 @@
 from Worms.Game import *
 from Worms.GroundGenerator import *
 from Worms.Collision import *
+from Worms.Physics import *
 from Worms.Menu import *
 
 pygame.init()
@@ -51,6 +52,12 @@ while windowOpen:
                 game.rocketShot = True
                 currentPlayer.isShooting = False
                 currentPlayer.shootPowerBar.width = 0
+            if event.key == pygame.K_SPACE and game.grenadeSelected:
+                grenade.setupForShoot(currentPlayer, currentPlayer.facing)
+                currentPlayer.hasShot = True
+                game.grenadeShot = True
+                currentPlayer.isShooting = False
+                currentPlayer.shootPowerBar.width = 0
 
     # Weapon selection
     if keys[pygame.K_1]:
@@ -92,11 +99,18 @@ while windowOpen:
                 currentPlayer.shootPowerBar.width = 0
 
         if game.grenadeSelected:
-            # Grenade shot
-            grenade = Grenade(round(currentPlayer.x + currentPlayer.width // 2),
-                              round(currentPlayer.y + currentPlayer.height // 2), 6, currentPlayer.facing)
-            currentPlayer.hasShot = True
-            game.grenadeShot = True
+            if not currentPlayer.isShooting:
+                currentPlayer.isShooting = True
+
+            game.updatePower()
+
+            if grenade.vel >= 20:
+                grenade.setupForShoot(currentPlayer, currentPlayer.facing)
+                currentPlayer.hasShot = True
+                game.grenadeShot = True
+                currentPlayer.isShooting = False
+                currentPlayer.shootPowerBar.width = 0
+
     else:
         currentPlayer.standing = True
         currentPlayer.walkCount = 0
@@ -155,13 +169,12 @@ while windowOpen:
         newPos = Physics.CalculateNexPosition(pygame.math.Vector2(rocket.x, rocket.y), rocket.vel,
                                               pygame.math.Vector2(5, 0), currentPlayer.crosshair.angle, game.time)
         #Rocket with Ground collision
-        for i in sol:#[int(rocket.x) - 20 : int(rocket.x) + 20]:
-            if rocket.y - 13 <= i[1]:
+        for i in sol[int(rocket.x) - 20 : int(rocket.x) + 20]:
+            if rocket.y + rocket.radius <= i[1]:
                 fallRocket = 0
             else:
                 fallRocket = 1
                 break
-
         if fallRocket == 0:
             rocket.y = newPos.y
             rocket.x = newPos.x
@@ -176,25 +189,54 @@ while windowOpen:
                 game.time = 0
                 game.rocket.vel = 0
 
-            #player switch
-            game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
-            currentPlayer = game.switchPlayer()
+        # Rocket with player collision
+        if player.rect.collidepoint(rocket.x, rocket.y):
+            rocket.x = player.x + player.width/2
+            rocket.y = player.y + player.height/2
+            rocket.radius += 2
+            if rocket.radius > 20:
+                rocket.radius = 0
+                game.rocketShot = False
+                game.rocketSelected = False
+                game.time = 0
+                game.rocket.vel = 0
+            # todo : gérer player life
+
+        # player switch
+        #game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+        #currentPlayer = game.switchPlayer()
 
     # Grenade
+    rebonds = 0
     if game.grenadeShot:
-        if grenade.x < screenWidth and grenade.x > 0 and grenade.y < screenHeight and grenade.y > 0:
-            game.time += 0.05
-            newPos = Physics.CalculateNexPosition(pygame.math.Vector2(grenade.x, grenade.y), grenade.vel,
-                                                  pygame.math.Vector2(0, 0), currentPlayer.crosshair.angle, game.time)
+        game.time += 0.05
+        newPos = Physics.CalculateNexPosition(pygame.math.Vector2(grenade.x, grenade.y), grenade.vel,
+                                              pygame.math.Vector2(0, 0), currentPlayer.crosshair.angle, game.time)
 
+        # Rocket with Ground collision
+        for i in sol[int(grenade.x) - 10 : int(grenade.x) + 10]:
+            if grenade.y + grenade.radius <= i[1]:
+                fallGrenade = 0
+            else:
+                fallGrenade = 1
+                break
+
+        if fallGrenade == 0:
             grenade.x = newPos.x
             grenade.y = newPos.y
+        else:
+            CalculRebonds(grenade, game.time)
 
-    # elif collision and nbRebond < 5:
-    # grenade.ResetSpeedVector()
-    # grenade.grenadeShot()
-    # else:
-    # explosion()
+        # Rocket with player collision
+        if player.rect.collidepoint(grenade.x, grenade.y):
+            grenade.x = player.x + player.width / 2
+            grenade.y = player.y + player.height / 2
+            print("collision with player")
+            # todo : gérer player life
+
+        # player switch
+        #game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+        #currentPlayer = game.switchPlayer()
 
     game.redrawGameWindow(window, screenHeight, screenWidth)
 

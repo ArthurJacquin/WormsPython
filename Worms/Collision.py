@@ -4,27 +4,6 @@ from Worms.Rocket import *
 from Worms.Grenade import *
 from Worms.GroundGenerator import *
 
-# détection collision
-def GroundCollisionPlayer(objet, tabSurface):
-    for i in tabSurface[objet.x - 10: objet.y + 10]:
-        if objet in tabSurface:
-                return True
-
-# point d'impact de la collision
-def ImpactCollisionRocket(rocket, sol):
-    if GroundCollision(rocket, grenade, sol):
-        impactPos = pygame.math.Vector2(rocket.x + (rocket.radius / 2), rocket.y + (rocket.radius / 2))
-        return impactPos
-
-def ImpactCollisionGrenade(grenade, sol):
-    pos = (rocket.x, rocket.y)
-    for i in sol:
-        if pos == sol[i]:
-            impactPos = pygame.math.Vector2(grenade.x + (grenade.radius / 2), grenade.y + (grenade.radius / 2))
-            break
-    return impactPos
-
-
 # Calcul normal sol pour rebonds
 def GroundNormal(impactPos, sol):
     pointA = impactPos + 1
@@ -42,8 +21,21 @@ def GroundNormal(impactPos, sol):
     normal = pygame.math.Vector2(impactPos, normalPoint)
     return normal
 
-# Collision avec le sol
-# def Rebond(impactPos, grenade, sol):
-# rebonds = 0
-# while(rebonds != 2):
-# calcul du rebond
+
+#rebonds
+def CalculRebonds(grenade, time):
+    rebonds = 0
+    if rebonds > 0 and rebonds <= 2:
+
+        grenade.vel -= 2
+        time = 0
+        grenade.x = grenade.x
+        grenade.y = grenade.y
+        newPosRebonds = Physics.CalculateNexPosition(pygame.math.Vector2(grenade.x, grenade.y), grenade.vel,
+                                                     pygame.math.Vector2(0, 0), 48, time)
+        grenade.x = -newPosRebonds.x
+        grenade.y = -newPosRebonds.y
+
+        #Debug
+        print("rebonds : ", rebonds)
+        rebonds += 1
