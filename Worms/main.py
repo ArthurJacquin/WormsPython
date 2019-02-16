@@ -1,7 +1,7 @@
 from Worms.Game import *
 from Worms.GroundGenerator import *
-from Worms.Collision import *
 from Worms.Physics import *
+import time
 from Worms.Menu import *
 
 pygame.init()
@@ -245,19 +245,20 @@ while windowOpen:
         else:
             grenade.x = grenade.x
             grenade.y = grenade.y
+            #delay
+            time = round(game.maxTimePerTurn/1000) - game.currentTurnTime -3
+            if time >= 2:
+                grenade.radius += 2
+                if grenade.radius > 20:
+                    grenade.radius = 0
+                    game.grenadeShot = False
+                    game.grenadeSelected = False
+                    game.time = 0
+                    game.grenade.vel = 0
 
-            # todo : delay avant explosion
-            grenade.radius += 2
-            if grenade.radius > 20:
-                grenade.radius = 0
-                game.grenadeShot = False
-                game.grenadeSelected = False
-                game.time = 0
-                game.grenade.vel = 0
-
-                # player switch
-                game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
-                currentPlayer = game.switchPlayer()
+                    # player switch
+                    game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+                    currentPlayer = game.switchPlayer()
 
         # Grenade with player collision
         for player in game.players:
@@ -272,7 +273,6 @@ while windowOpen:
                     game.grenadeSelected = False
                     game.time = 0
                     game.grenade.vel = 0
-                    print("collision with player")
 
                     deadPlayerIndex = game.damagePlayer(player)
 

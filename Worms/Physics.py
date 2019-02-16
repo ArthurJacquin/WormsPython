@@ -1,6 +1,5 @@
 import math
 import pygame
-from Worms.Collision import *
 
 
 class Physics:
