@@ -145,7 +145,7 @@ while windowOpen:
             player.y += 3
         else:
             if not(player.isJumping):
-                player.y = i[1] - (player.height)+20
+                player.y = i[1] - (player.height)+18
 
 
     # Jump
@@ -203,6 +203,26 @@ while windowOpen:
                 # player switch
                 game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
                 currentPlayer = game.switchPlayer()
+
+        if(rocket.x < 0 ):
+            # player switch
+            game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+            currentPlayer = game.switchPlayer()
+            rocket.radius = 0
+            game.rocketShot = False
+            game.rocketSelected = False
+            game.time = 0
+            game.rocket.vel = 3
+
+        if(rocket.x > screenWidth):
+            # player switch
+            game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+            currentPlayer = game.switchPlayer()
+            rocket.radius = 0
+            game.rocketShot = False
+            game.rocketSelected = False
+            game.time = 0
+            game.rocket.vel = 3
 
         # Rocket with player collision
         for player in game.players:
@@ -262,6 +282,26 @@ while windowOpen:
                     # player switch
                     game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
                     currentPlayer = game.switchPlayer()
+
+            if(grenade.x < 0):
+                # player switch
+                game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+                currentPlayer = game.switchPlayer()
+                grenade.radius = 0
+                game.grenadeShot = False
+                game.grenadeSelected = False
+                game.time = 0
+                game.grenade.vel = 0
+
+            if(grenade.x > screenWidth):
+                # player switch
+                game.players[game.currentPlayerIndex % len(game.players)].hasShot = False
+                currentPlayer = game.switchPlayer()
+                grenade.radius = 0
+                game.grenadeShot = False
+                game.grenadeSelected = False
+                game.time = 0
+                game.grenade.vel = 0
 
         # Grenade with player collision
         for player in game.players:
