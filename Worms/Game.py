@@ -10,12 +10,13 @@ class Game:
     def __init__(self, sol, screenHeight, screenWidth):
 
         self.sol = sol
+        self.players = list()
 
         # Player
-        self.player = Player(100, 200, 60, 60)
-        self.player2 = Player(400, 200, 60, 60)
+        for i in range(0, 4):
+            player = Player(random.randrange(20, screenWidth - 50), 200, 60, 60)
+            self.players.append(player)
 
-        self.players = [self.player, self.player2]
         self.currentPlayerIndex = 0
 
         self.rocketShot = False

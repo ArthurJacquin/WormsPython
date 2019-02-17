@@ -36,7 +36,7 @@ class Physics:
 
     @staticmethod
     def GetTrajectory(startpos, speed, sol, angle, wind = pygame.math.Vector2(0, 0), useWind = False, mass = 1):
-        trajPoints = [(round(startpos.x),round(startpos.y))]
+        trajPoints = [(round(startpos.x), round(startpos.y))]
 
         time = 0
 
