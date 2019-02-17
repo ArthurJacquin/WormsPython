@@ -14,7 +14,7 @@ class Game:
         self.players = list()
 
         # Player
-        for i in range(0, 4):
+        for i in range(0, 2):
             player = Player(random.randrange(20, screenWidth - 50), 200, 60, 60)
             self.players.append(player)
 
