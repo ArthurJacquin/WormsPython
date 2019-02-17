@@ -134,16 +134,19 @@ while windowOpen:
     # Player with ground collision
     fall = 0
     for player in game.players:
-        pixelDetector = (player.x, player.y + player.height - 20)
-        for i in sol[player.x - 20 : player.x + 20]:
-           if pixelDetector not in sol:
-               fall = 1
-           else:
-                fall = 0
-        #if fall == 1:
-        #    player.y += 3
-        #else :
-            #todo: gérer la marche sur le sol
+        pixelDetector = (int(player.x+player.width/2), int(player.y) + player.height)
+        i = sol[pixelDetector[0]]
+        if pixelDetector[1] < i[1]:
+            fall = 1
+        else:
+            fall = 0
+
+        if fall == 1:
+            player.y += 3
+        else:
+            if not(player.isJumping):
+                player.y = i[1] - (player.height)+20
+
 
     # Jump
     if not currentPlayer.isJumping:
