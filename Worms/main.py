@@ -3,7 +3,6 @@ from Worms.GroundGenerator import *
 from Worms.Physics import *
 import time
 from Worms.Menu import *
-
 pygame.init()
 
 # Window init
@@ -268,9 +267,11 @@ while windowOpen:
         else:
             grenade.x = grenade.x
             grenade.y = grenade.y
-            #delay
-            time = round(game.maxTimePerTurn/1000) - game.currentTurnTime -3
-            if time >= 2:
+            startTime = pygame.time.get_ticks()
+            while not game.explode:
+                if pygame.time.get_ticks() - startTime > 2000:
+                    game.explode = True
+            if game.explode:
                 grenade.radius += 2
                 if grenade.radius > 20:
                     grenade.radius = 0
@@ -309,6 +310,7 @@ while windowOpen:
             if rect.collidepoint(grenade.x, grenade.y) and player != currentPlayer:
                 grenade.x = player.x + player.width / 2
                 grenade.y = player.y + player.height / 2
+
                 grenade.radius += 2
                 if grenade.radius > 20:
                     grenade.radius = 0

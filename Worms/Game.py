@@ -3,6 +3,7 @@ from Worms.Player import *
 from Worms.Rocket import *
 from Worms.Grenade import *
 from Worms.Crosshair import *
+import time
 from Worms.GroundGenerator import *
 
 
@@ -22,6 +23,7 @@ class Game:
         self.rocketShot = False
         self.grenadeShot = False
 
+        self.explode = False
         self.time = 0
 
         # Weapons creation
